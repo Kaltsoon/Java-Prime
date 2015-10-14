@@ -28,10 +28,17 @@ public class PrimeApplication {
                 executeOutputCommand(command);
             }else if(commandType == CommandType.NUMBER){
                 executeNumberCommand(command);
-            }else{
+            }else if(commandType == CommandType.UNDEFINED){
+                executeUndefinedCommand();
+            }else if(commandType == CommandType.END){
                 break;
             }
         }
+    }
+    
+    private void executeUndefinedCommand(){
+        System.out.println("Invalid command!");
+        System.out.println("Input a number or use-output-file FILENAME to change output target to a file");
     }
     
     private void executeOutputCommand(String input){
@@ -47,10 +54,6 @@ public class PrimeApplication {
         } catch(Exception e){
             System.out.println("The maximum value for number is " + Integer.MAX_VALUE + "!");
             return;
-        }
-        
-        if(number < 0){
-            System.out.println("The minimum value for number is 0!");
         }
         
         this.output.out(PrimeInspector.primeStatus(number));
