@@ -1,33 +1,23 @@
 package outputHandlers;
 
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FileOutputHandler implements OutputHandler {
     
-    private final String fileName;
+    private final File file;
     
-    public FileOutputHandler(String fileName){
-        this.fileName = fileName;
+    public FileOutputHandler(File file){
+        this.file = file;
     }
     
     @Override
-    public void out(Object content) { 
-        PrintWriter outputWriter = null;
+    public void out(Object content) throws IOException { 
+        FileWriter fileWriter = new FileWriter(this.file, true);  
         
-        try {
-            outputWriter = new PrintWriter(new BufferedWriter(new FileWriter(this.fileName, true)));
-            outputWriter.println(content.toString());
-            outputWriter.close();
-        } catch (IOException ex) {
-            Logger.getLogger(FileOutputHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            outputWriter.close();
-        }
+        fileWriter.write(content.toString() + "\n");      
+        fileWriter.close();
     }
     
 }

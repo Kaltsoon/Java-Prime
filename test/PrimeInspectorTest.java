@@ -29,7 +29,8 @@ public class PrimeInspectorTest {
         assertEquals(PrimeInspector.primeStatus(1), "1 is prime");
         assertEquals(PrimeInspector.primeStatus(2), "2 is prime");
         assertEquals(PrimeInspector.primeStatus(7), "7 is prime");
-        assertEquals(PrimeInspector.primeStatus(7), "3412151 is prime");   
+        assertEquals(PrimeInspector.primeStatus(17), "17 is prime");   
+        assertEquals(PrimeInspector.primeStatus(3412151), "3412151 is prime");   
     }
     
     public void shouldGetNonPrimesRight() {

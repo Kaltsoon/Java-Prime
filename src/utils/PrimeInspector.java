@@ -10,7 +10,7 @@ public class PrimeInspector {
     }
     
     public static String primeStatus(int number){
-        if( number % 2 == 0 ) isNotPrimeMessage(number, 2);
+        if( number % 2 == 0 && number != 2 ) isNotPrimeMessage(number, 2);
         
         for( int i = 2; i < number; i++ ){
             if( number % i == 0 ) return isNotPrimeMessage(number, i);

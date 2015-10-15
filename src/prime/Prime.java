@@ -11,7 +11,7 @@ public class Prime {
 
     public static void main(String[] args) throws IOException { 
         InputHandler input = new SystemInputHandler(new Scanner(System.in));
-        OutputHandler output = new SystemOutputHandler();
+        OutputHandler output = new SystemOutputHandler();    
         
         PrimeApplication app = new PrimeApplication(input, output);
         

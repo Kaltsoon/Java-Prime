@@ -1,14 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package outputHandlers;
 
-/**
- *
- * @author kalleilv
- */
+import java.io.IOException;
+
 public interface OutputHandler {
-    public void out(Object content);
+    public void out(Object content) throws IOException;
 }

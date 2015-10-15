@@ -1,61 +1,63 @@
 package prime;
 
+import commands.CommandCollection;
 import utils.CommandType;
-import utils.Command;
-import utils.PrimeInspector;
+import utils.CommandParser;
 import inputHandlers.InputHandler;
-import outputHandlers.FileOutputHandler;
 import outputHandlers.OutputHandler;
 
 public class PrimeApplication {
     
     private InputHandler input;
     private OutputHandler output;
+    private CommandCollection commandCollection;
     
     public PrimeApplication(InputHandler input, OutputHandler output){
         this.input = input;
         this.output = output;
+        this.commandCollection = new CommandCollection(this);
+    }
+    
+    public void setOutputHandler(OutputHandler output){
+        this.output = output;
+    }
+    
+    public OutputHandler getOutputHandler(){
+        return this.output;
+    }
+    
+    public void setInputHandler(InputHandler input){
+        this.input = input;
+    }
+    
+    public InputHandler getInputHandler(){
+        return this.input;
     }
     
     public void run(){
-        while(true){
-            System.out.println("Input number");
-            
-            String command = this.input.in();
-            CommandType commandType = Command.getType(command);
-
-            if(commandType == CommandType.OUTPUT_FILE){
-                executeOutputCommand(command);
-            }else if(commandType == CommandType.NUMBER){
-                executeNumberCommand(command);
-            }else if(commandType == CommandType.UNDEFINED){
-                executeUndefinedCommand();
-            }else if(commandType == CommandType.END){
-                break;
-            }
-        }
-    }
-    
-    private void executeUndefinedCommand(){
-        System.out.println("Invalid command!");
-        System.out.println("Input a number or use-output-file FILENAME to change output target to a file");
-    }
-    
-    private void executeOutputCommand(String input){
-        String fileName = input.split(" ")[1];
-        this.output = new FileOutputHandler(fileName);
-    }
-    
-    private void executeNumberCommand(String input){
-        int number = 0;
+        System.out.println("* Input use-output-file FILENAME to target output to a file");
+        System.out.println("* Input end to end");
         
-        try{
-            number = Integer.parseInt(input);
-        } catch(Exception e){
-            System.out.println("The maximum value for number is " + Integer.MAX_VALUE + "!");
-            return;
+        while(nextCommand());
+        
+        System.out.println("Bye!");
+    }
+    
+    public boolean nextCommand(){
+        System.out.println("Input number");
+        
+        String givenInput = this.input.in();
+        
+        CommandType commandType = CommandParser.getType(givenInput);
+        
+        if(commandType == CommandType.UNDEFINED){
+            System.out.println("Invalid command!");
+        }else if(commandType == CommandType.END){
+            return false;
+        }else{
+            this.commandCollection.getCommand(commandType).execute(givenInput);
         }
         
-        this.output.out(PrimeInspector.primeStatus(number));
+        return true;
     }
 }
